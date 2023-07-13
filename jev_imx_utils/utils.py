@@ -31,7 +31,7 @@ def banner(name: str, fill: str = "=", padding: int = 2) -> None:
 
 @contextlib.contextmanager
 def banner_ctx(
-    name: str, start_str: str = "START:", end_str: str = "END:", fill: str = "=", padding: int = 2
+    name: str, fill: str = "=", padding: int = 2, start_str: str = "START:", end_str: str = "END:"
 ) -> contextlib.AbstractContextManager:
     try:
         yield banner(start_str + " " + name, fill, padding)
