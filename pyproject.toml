@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jev-imx-utils"
+dynamic = ["version"]
+authors = [
+    {name = "Jevin Sweval", email = "jevinsweval@gmail.com"},
+]
+description = "Utilities for NXP iMX SoCs"
+readme = {file = 'README.md', content-type='text/markdown'}
+requires-python = ">=3.8"
+keywords = ["imx", "nxp", "nxp-imx"]
+license = {text = "BSD-2-Clause"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "attrs",
+    "construct",
+    "construct-typing",
+    "nativetypes",
+]
+
+[project.optional-dependencies]
+optional-dependencies = [
+    "pre-commit",
+]
+
+[project.urls]
+Repository = "https://github.com/jevinskie/jev-imx-utils"
+
+[project.scripts]
+jev-imx-util = "jev_imx_utils.tools.jev_imx_util:main"
+
+[tool.setuptools.dynamic]
+version = {attr = "jev_imx_utils.__version__"}
+
+[tool.setuptools]
+zip-safe = true
