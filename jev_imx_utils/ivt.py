@@ -55,8 +55,8 @@ foo = DataclassStruct(_IVT_Header)
 # inspect(foo)
 
 
-IVT_Header = BigEndianByteSwapped(DataclassStruct(_IVT_Header))
-# IVT_Header = DataclassStruct(_IVT_Header)
+# IVT_Header = BigEndianByteSwapped(DataclassStruct(_IVT_Header))
+IVT_Header = DataclassStruct(_IVT_Header)
 
 
 @dataclasses.dataclass
