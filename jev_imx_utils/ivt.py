@@ -1,22 +1,17 @@
 import dataclasses
 import sys
-import typing as t
 
 from construct import (
-    Adapter,
-    Array,
-    Byte,
-    BytesInteger,
     ByteSwapped,
     Const,
     Int8ul,
     Int16ub,
     Int32ul,
-    Probe,
-    this,
+    Hex,
 )
-from construct_typed import DataclassMixin, DataclassStruct, EnumBase, TEnum, csfield
-from rich import inspect, print
+from construct_typed import DataclassMixin, DataclassStruct, TEnum, csfield
+
+from .construct_typed_additions import EnumBase
 
 _le_native: bool = sys.byteorder == "little"
 
@@ -37,38 +32,38 @@ def BigEndianByteSwapped(subcon):
     return ByteSwapped(subcon)
 
 
-class IVT_Header_Version(EnumBase):
+class IVT_v6_Header_Version(EnumBase):
     v64 = 0x40
     v65 = 0x41
 
 
 @dataclasses.dataclass
-class _IVT_Header(DataclassMixin):
+class _IVT_v6_Header(DataclassMixin):
     # probe: None = csfield(Probe(lookahead=4))
-    tag: int = csfield(Const(0xD1, Int32ul))
+    tag: int = csfield(Const(0xD1, Hex(Int8ul)))
     length: int = csfield(Const(32, Int16ub))
-    version: IVT_Header_Version = csfield(TEnum(Int8ul, IVT_Header_Version))
+    version: IVT_v6_Header_Version = csfield(TEnum(Hex(Int8ul), IVT_v6_Header_Version))
 
 
-foo = DataclassStruct(_IVT_Header)
+foo = DataclassStruct(_IVT_v6_Header)
 
 # inspect(foo)
 
 
 # IVT_Header = BigEndianByteSwapped(DataclassStruct(_IVT_Header))
-IVT_Header = DataclassStruct(_IVT_Header)
+IVT_v6_Header = DataclassStruct(_IVT_v6_Header)
 
 
 @dataclasses.dataclass
-class _IVT(DataclassMixin):
-    header: IVT_Header = csfield(IVT_Header)
-    entry: int = csfield(Int32ul)
-    reserved: Int32ul = csfield(Const(0, Int32ul))
-    dcd: int = csfield(Int32ul)
-    boot_data: int = csfield(Int32ul)
-    ivt_self: int = csfield(Int32ul)
-    cfs: int = csfield(Int32ul)
+class _IVT_v6(DataclassMixin):
+    header: IVT_v6_Header = csfield(IVT_v6_Header)
+    entry: int = csfield(Hex(Int32ul))
+    reserved: Int32ul = csfield(Const(0, Hex(Int32ul)))
+    dcd: int = csfield(Hex(Int32ul))
+    boot_data: int = csfield(Hex(Int32ul))
+    ivt_self: int = csfield(Hex(Int32ul))
+    cfs: int = csfield(Hex(Int32ul))
     reserved2: int = csfield(Const(0, Int32ul))
 
 
-IVT = DataclassStruct(_IVT)
+IVT_v6 = DataclassStruct(_IVT_v6)

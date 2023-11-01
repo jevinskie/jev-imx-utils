@@ -3,13 +3,13 @@
 import argparse
 from pathlib import Path
 
-from jev_imx_utils.firmware_image import FirmwareImage
+from jev_imx_utils.firmware_image import FirmwareImage_v6
 
 
 def real_main(args):
     print(f"hi parsing {args.firmware_image_path}")
-    fw_img = FirmwareImage.from_path(args.firmware_image_path, args.ivt_offset)
-    print(f"fw_img: {fw_img}")
+    fw_img = FirmwareImage_v6.from_path(args.firmware_image_path, args.ivt_offset)
+    print(f"fw_img: {str(fw_img)}")
 
 
 def main():

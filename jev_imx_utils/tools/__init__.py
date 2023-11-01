@@ -1,1 +1,3 @@
-from jev_imx_utils.tools import jev_imx_util
+from . import jev_imx_util
+
+__all__ = ("jev_imx_util",)
